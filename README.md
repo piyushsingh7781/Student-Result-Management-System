@@ -1,148 +1,225 @@
-# Student-Result-Management-System
-Here is the complete theoretical documentation (Capstone Project Report) for your Student Result Management System (SRMS) in C. You can copy-paste these sections directly into your project report, thesis, or presentation slides.
+<div align="center">
 
-1. Abstract
+# 🎓 Student Result Management System (SRMS)
 
-The Student Result Management System (SRMS) is a software application developed in the C programming language to automate the processing, storage, and retrieval of student academic records. Traditional manual grading systems rely heavily on paper registers and spreadsheets, which are time-consuming, prone to human calculation errors, and difficult to audit or retrieve quickly. This project replaces manual record-keeping with a structured, file-based computerized system. By utilizing C structures (struct) and binary file handling (records.dat), the system performs fast Create, Read, Update, and Delete (CRUD) operations, validates user input, automatically calculates total marks, percentages, and letter grades, and generates formatted individual report cards on demand.
+**A complete, file-based academic record management and automated grading system built in C.**
 
-2. Introduction & Problem Statement
+![Language](https://shields.io)
+![Storage](https://shields.io)
+![Platform](https://shields.io)
+![Project Type](https://shields.io)
 
+</div>
 
-2.1 Existing System (Manual Process)
+---
 
-In many small-scale educational institutions and departments, examination results are compiled manually:
-• Faculty members record marks on physical sheets.
-• Administrative staff manually sum marks, calculate percentages, and assign grades.
-• Report cards are handwritten or typed individually.
+## 📑 Table of Contents
 
-2.2 Limitations of the Existing System
+1. [Abstract](#-1-abstract)
+2. [Introduction & Problem Statement](#-2-introduction--problem-statement)
+3. [Objectives](#-3-objectives)
+4. [Key Features](#-4-key-features)
+5. [System Architecture & Design](#-5-system-architecture--design)
+6. [Data Structure & Grading Logic](#-6-data-structure--grading-logic)
+7. [Core Algorithms](#-7-core-algorithms)
+8. [Installation & Execution](#-8-installation--execution)
+9. [Sample Console Output](#-9-sample-console-output)
+10. [Software Testing & Validation](#-10-software-testing--validation)
+11. [Repository Structure](#-11-repository-structure)
+12. [Conclusion & Future Scope](#-12-conclusion--future-scope)
 
-• High Error Rate: Manual arithmetic often leads to mistakes in totals, percentages, and grade boundaries.
-• Time-Consuming: Searching for a single student’s past record across physical files takes significant effort.
-• Data Redundancy & Loss: Paper records are vulnerable to physical damage, misplacement, and duplication.
-• Difficulty in Updating: Correcting a single subject mark requires recalculating the entire marksheet manually.
+---
 
-2.3 Proposed System
+## 📖 1. Abstract
 
-The proposed SRMS automates the entire lifecycle of result processing. Once raw subject marks are entered, the system immediately validates the data, prevents duplicate roll numbers, computes academic metrics deterministically, and serializes the record into a persistent binary file for instant future access.
+The **Student Result Management System (SRMS)** is a console-based software application developed in the C programming language to automate the storage, calculation, and retrieval of student academic performance. Traditional manual grading workflows rely on physical ledgers and spreadsheets, which are time-consuming, prone to human arithmetic errors, and difficult to audit. This system replaces manual record-keeping with a structured, binary file-based engine (`records.dat`). Leveraging C structures (`struct`) and direct file pointer manipulation, SRMS performs reliable Create, Read, Update, and Delete (CRUD) operations, validates inputs, computes totals, percentages, and letter grades automatically, and generates formatted report cards on demand.
 
-3. Objectives of the Project
+---
 
-1. Automation: Eliminate manual calculation of totals, percentages, and grades.
-2. Data Persistence: Store student records permanently on disk using binary file streams so data is retained across program executions.
-3. Data Integrity: Enforce primary key uniqueness (unique Roll Numbers) and strict input validation (0–100 mark range).
-4. Efficiency: Enable instant retrieval, in-place modification, and safe deletion of records in O(n) sequential file scans.
-5. Standardization: Generate uniform, human-readable tabular summaries and individual student report cards.
+## 🔍 2. Introduction & Problem Statement
 
-4. System Analysis & Feasibility Study
+### Existing Manual System
+In traditional setups, examination records are compiled manually on paper sheets, totals and percentages are calculated by hand, and report cards are written individually.
 
+### Limitations of the Manual Approach
+- **High Error Rate:** Manual arithmetic frequently introduces calculation mistakes in totals and grade boundaries.
+- **Slow Retrieval:** Locating an individual student's record across physical registers is inefficient.
+- **Data Vulnerability:** Physical files are susceptible to damage, loss, and duplication.
+- **Difficult Updates:** Correcting a single subject mark requires recalculating the entire marksheet manually.
 
-4.1 Functional Requirements
+### Proposed Solution
+SRMS automates the entire result lifecycle. Once subject marks are entered, the system validates input bounds, blocks duplicate Roll Numbers, calculates percentages and grades deterministically, and serializes the record to a persistent binary file for instant retrieval.
 
-• Record Creation: Add a student with Roll Number, Full Name, and marks across 5 subjects.
-• Automated Evaluation: Compute total marks, percentage, and assign grades (A, B, C, D, F).
-• Record Retrieval: Display all student results in a formatted table or search for an individual report card by Roll Number.
-• Record Modification: Update marks for an existing student and automatically recalculate their grade.
-• Record Deletion: Permanently remove a student record from the database.
+---
 
-4.2 Non-Functional Requirements
+## 🎯 3. Objectives
 
-• Reliability: Atomic file replacement during deletion prevents data corruption.
-• Usability: Clear, menu-driven Command-Line Interface (CLI) with descriptive error messages.
-• Portability: Written in standard ANSI/C99 C, allowing compilation on Windows, Linux, and macOS without external dependencies.
+1. **Automate Grading:** Eliminate manual computation of total marks, percentages, and letter grades.
+2. **Ensure Data Persistence:** Store records permanently on disk via binary file streams (`records.dat`).
+3. **Enforce Data Integrity:** Prevent duplicate primary keys (Roll Numbers) and reject invalid marks (`< 0` or `> 100`).
+4. **Optimize Storage Operations:** Support in-place record updates (`fseek`) and safe deletions via atomic file swapping.
+5. **Standardize Reporting:** Produce uniform tabular class summaries and detailed individual student marksheets.
 
-4.3 Feasibility Study
+---
 
-• Technical Feasibility: Requires only a standard C compiler (GCC) and minimal RAM/disk space, making it runnable on any basic computer hardware.
-• Economic Feasibility: Zero licensing or server hosting costs since it uses open-source compilers and local file storage.
-• Operational Feasibility: Simple numbered menu navigation requires minimal training for administrative staff.
+## ✨ 4. Key Features
 
-5. System Design & Architecture
+- **Add Student Records:** Registers students with a unique Roll Number, Full Name, and marks across 5 subjects.
+- **Automated Grade Evaluation:** Computes total marks, overall percentage, pass/fail status, and assigns letter grades (`A`–`F`).
+- **Display All Results:** Renders an aligned summary table of all stored students and total record count.
+- **Search Individual Report Card:** Queries by Roll Number to generate a complete subject-wise transcript.
+- **In-Place Record Modification:** Updates subject marks for existing students and recalculates their final grade automatically.
+- **Safe Record Deletion:** Removes records cleanly using temporary file replacement without corrupting existing data.
+- **Input Buffer Sanitization:** Prevents infinite loops caused by invalid non-numeric inputs in `stdin`.
 
+---
 
-5.1 Modular Architecture
+## 🏗️ 5. System Architecture & Design
 
-The system follows a procedural, modular design divided into four logical layers:
-1. Presentation Layer (main, displayAllStudents, searchStudent): Handles user menus, prompts, and formatted ASCII output tables.
-2. Validation Layer (rollExists, clearInputBuffer): Sanitizes standard input (stdin), prevents buffer overflows, and blocks duplicate roll numbers.
-3. Business Logic Layer (calculateResult): Encapsulates grading rules and percentage formulas independently of storage.
-4. Data Persistence Layer (addStudent, updateStudent, deleteStudent): Manages binary file I/O operations (fopen, fread, fwrite, fseek, remove, rename).
+### Modular Layer Breakdown
+The codebase follows a clean procedural architecture divided into four logical layers:
 
-5.2 Data Flow Diagram (DFD - Level 0 & Level 1)
+1. **Presentation Layer (`main`, `displayAllStudents`, `searchStudent`):** Manages the interactive CLI menu and renders aligned ASCII tables and report cards.
+2. **Validation Layer (`rollExists`, `clearInputBuffer`):** Sanitizes standard input (`stdin`) and enforces primary key uniqueness.
+3. **Business Logic Layer (`calculateResult`):** Decouples percentage and grading formulas from file I/O and UI code.
+4. **Persistence Layer (`addStudent`, `updateStudent`, `deleteStudent`):** Handles low-level binary file operations (`fopen`, `fread`, `fwrite`, `fseek`, `remove`, `rename`).
 
-• Level 0 (Context Level):
-Admin / User \xrightarrow{\text{Student Details & Marks}} [ SRMS Core Engine ] \(\xrightarrow{\text{Formatted\ Report\ Cards}}\) Admin / User
-[ SRMS Core Engine ] \(\xleftrightarrow{\text{Binary\ Read\ /\ Write}}\) ( records.dat )
-• Level 1 (Process Breakdown):
-	1. User Input → Process 1.0: Input Validation → Validated Data
-	2. Validated Data → Process 2.0: Grade & Percentage Engine → Complete Student Struct
-	3. Complete Struct → Process 3.0: File Storage Manager → records.dat
-	4. Roll No Query → Process 4.0: Search & Report Generator → Console Output
+### Data Flow Diagram (DFD)
 
-5.3 Data Structure Specification
+```text
++---------------+   Student Details & Marks    +-----------------------+
 
-Records are modeled using a contiguous memory block (struct) written directly to binary storage:
+|               | ---------------------------> |                       |
+| Admin / User  |                              |   SRMS Core Engine    |
+|               | <--------------------------- |       (main.c)        |
++---------------+   Formatted Report Cards     +-----------------------+
+                                                           ^
+                                                           | Binary Read/Write
+                                                           v
+                                               +-----------------------+
 
-Field Name	Data Type	Size (Bytes)	Description
-roll_no	int	4	Unique identifier (Primary Key)
-name	char[50]	50	Full name of the student
-marks[5]	float[5]	20	Marks obtained in 5 subjects (0.0 to 100.0)
-total	float	4	Sum of all 5 subject marks
-percentage	float	4	Average percentage (total / 5.0)
-grade	char	1	Computed letter grade (A, B, C, D, F)
+                                               |      records.dat      |
+                                               |   (Binary Storage)    |
+                                               +-----------------------+
+```
 
+---
 
-6. Core Algorithms & Implementation Logic
+## 📊 6. Data Structure & Grading Logic
 
+### Core Data Model (`Student` Struct)
+Each student record is stored as a contiguous memory block written directly to `records.dat`:
 
-6.1 Grading Algorithm
+```c
+typedef struct {
+    int roll_no;             // Unique Primary Key (4 bytes)
+    char name;           // Student Full Name (50 bytes)
+    float marks;          // Marks in 5 Subjects (20 bytes)
+    float total;             // Auto-computed Sum (4 bytes)
+    float percentage;        // Auto-computed Percentage (4 bytes)
+    char grade;              // Auto-assigned Grade 'A'-'F' (1 byte)
+} Student;
+```
 
-1. Initialize total = 0.
-2. Loop i from 0 to 4: add marks[i] to total.
-3. Compute percentage = total / 5.0.
-4. Evaluate grade thresholds:
-	• If percentage >= 90 → grade = 'A'
-	• Else if percentage >= 75 → grade = 'B'
-	• Else if percentage >= 60 → grade = 'C'
-	• Else if percentage >= 40 → grade = 'D'
-	• Else → grade = 'F'
+### Grading Scale
 
-6.2 In-Place Record Update (fseek Strategy)
+| Percentage Range | Letter Grade | Academic Status |
+| :--- | :---: | :---: |
+| **90.00% – 100.00%** | `A` | ✅ PASS |
+| **75.00% – 89.99%** | `B` | ✅ PASS |
+| **60.00% – 74.99%** | `C` | ✅ PASS |
+| **40.00% – 59.99%** | `D` | ✅ PASS |
+| **Below 40.00%** | `F` | ❌ FAIL |
 
-Instead of rewriting the entire file when updating marks, the file is opened in "rb+" (read/write binary) mode. Once the matching roll_no is read, the file cursor sits at the end of that record. The algorithm moves the cursor backward by -sizeof(Student) bytes using fseek(fp, -sizeof(Student), SEEK_CUR) and overwrites the old struct in place with fwrite().
+---
 
-6.3 Safe Record Deletion (Temporary File Strategy)
+## ⚙️ 7. Core Algorithms
 
-Because standard C file streams cannot delete bytes from the middle of a file directly:
-1. Open records.dat in "rb" mode and create temp.dat in "wb" mode.
-2. Read every Student struct sequentially from records.dat.
-3. Copy all records except the target roll_no into temp.dat.
-4. Close both streams, delete records.dat via remove(), and rename temp.dat to records.dat via rename().
+### In-Place Update (`fseek` Strategy)
+1. Open `records.dat` in `"rb+"` (read/write binary) mode.
+2. Read `Student` records sequentially until `s.roll_no == target_roll`.
+3. Move the file cursor backward by one record size: `fseek(fp, -(long)sizeof(Student), SEEK_CUR)`.
+4. Overwrite the updated `Student` struct directly in place using `fwrite()`.
 
-7. Software Testing & Validation
+### Safe Deletion (Temporary File Strategy)
+1. Open `records.dat` in `"rb"` mode and create `temp.dat` in `"wb"` mode.
+2. Copy every record *except* the matching `roll_no` into `temp.dat`.
+3. Close both file pointers, delete `records.dat` using `remove()`, and rename `temp.dat` to `records.dat` using `rename()`.
 
+---
 
-Test Case ID	Test Scenario	Input Provided	Expected Output	Status
-TC-01	Add valid student record	Roll: 101, Marks: 85, 90, 88, 76, 91	Record saved; Percentage: 86.00%, Grade: B	Pass
-TC-02	Duplicate Roll Number check	Roll: 101 (already exists)	Error message: "Roll Number 101 already exists!"	Pass
-TC-03	Out-of-bounds marks	Marks: 105 or -10	Error prompt asking for marks between 0 and 100	Pass
-TC-04	Non-numeric menu input	Choice: "abc"	Input buffer cleared safely; prompts again without infinite loop	Pass
-TC-05	Search non-existent student	Roll: 999	Info message: "No record found for Roll Number 999"	Pass
-TC-06	Update & recalculate grade	Roll: 101, New Marks: 95 across all	Overwrites record; updates Grade from B to A	Pass
-TC-07	Delete student record	Roll: 101	Record removed; subsequent search confirms deletion	Pass
+## 🚀 8. Installation & Execution
 
+### Prerequisites
+- A C compiler such as **GCC** (MinGW on Windows, GCC on Linux, or Clang/Xcode Command Line Tools on macOS).
 
-8. Conclusion & Future Scope
+### Step-by-Step Setup
 
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com
+   cd student-result-management-c
+   ```
 
-8.1 Conclusion
+2. **Compile the source code:**
+   ```bash
+   gcc -Wall -Wextra main.c -o srms
+   ```
 
-The Student Result Management System in C successfully demonstrates how structured programming and binary file handling can solve real-world administrative data management challenges. The system achieves high execution speed, zero external software dependencies, and reliable data persistence while eliminating manual grading errors.
+3. **Run the executable:**
+   - **Linux / macOS:**
+     ```bash
+     ./srms
+     ```
+   - **Windows:**
+     ```bash
+     srms.exe
+     ```
 
-8.2 Future Scope
+---
 
-• Authentication & Security: Implement password hashing and role-based access control (Admin vs. Student view-only mode).
-• Indexed Searching: Introduce binary search or hash indexing to reduce lookup time from O(n) to \(O(\log n)\) or O(1) for large datasets.
-• Merit List & Analytics: Add sorting algorithms (such as QuickSort) to rank students by percentage and compute subject-wise class averages.
-• Data Export: Add functionality to export formatted marksheets directly into .csv or .txt files for printing.
-Would you like me to also write viva-voce (oral exam) questions and answers based on this C code so you are prepared for your project defense?
+## 🖥️ 9. Sample Console Output
+
+```text
+=========================================
+   STUDENT RESULT MANAGEMENT SYSTEM
+=========================================
+1. Add New Student Record
+2. Display All Student Results
+3. Search Student by Roll Number
+4. Update Student Marks
+5. Delete Student Record
+6. Exit
+-----------------------------------------
+Enter your choice: 3
+
+Enter Roll Number to search: 101
+
+-----------------------------------------
+             STUDENT REPORT CARD         
+-----------------------------------------
+Roll Number : 101
+Name        : Aarav Sharma
+-----------------------------------------
+Mathematics          : 92.00 / 100
+Physics              : 88.00 / 100
+Computer Science     : 95.00 / 100
+English              : 84.00 / 100
+Electronics          : 90.00 / 100
+-----------------------------------------
+Total Marks : 449.00 / 500.00
+Percentage  : 89.80%
+Grade       : B (PASS)
+-----------------------------------------
+```
+
+---
+
+## 🧪 10. Software Testing & Validation
+
+| Test ID | Scenario | Input Provided | Expected Behavior | Result |
+| :--- | :--- | :--- | :--- | :---: |
+| **TC-01** | Add valid student | Roll: `101`, Marks: `85, 90, 88, 76, 91` | Saves record; Percentage: `86.00%`, Grade: `B` | ✅ Pass |
+| **TC-02** | Duplicate Roll Number | Roll: `101` (already exists) | Rejects entry with duplicate roll error message | ✅ Pass |
+| **TC-03** | Out-of-bounds marks | Marks: `105` or `-5` | Prompts user again to enter marks in `0–100` | ✅ Pass |
+| **TC-04** | Non-numeric menu input | Choice: `"xyz"` | Clears `stdin` buffer safely without crashing | ✅ Pass |
